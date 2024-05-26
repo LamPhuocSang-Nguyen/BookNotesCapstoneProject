@@ -12,14 +12,15 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static('public'));
 
 app.get("/", async (req, res) => {
-    //const ISBN = "0385472579"
-    //const size = "S.jpg";
-    try{
-        const response = await axios.get(`https://covers.openlibrary.org/b/isbn/ + ${ISBN} + '-' + ${size}`);
-        res.render("index.ejs", {data: response.data});
-        console.log(response.data);
-    }
-    catch(err){
+    const ISBN = "0385472579";
+    const size = "S.jpg";
+    try {
+        const response = await axios.get(`https://covers.openlibrary.org/b/isbn/${ISBN}-${size}`, { responseType: 'arraybuffer' });
+        const base64Image = Buffer.from(response.data, 'binary').toString('base64');
+        const imgSrc = `data:image/jpeg;base64,${base64Image}`;
+        res.render("index.ejs", { data: imgSrc });
+        //console.log(imgSrc);
+    } catch (err) {
         console.log(err);
     }
 
