@@ -12,8 +12,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static('public'));
 
 app.get("/", async (req, res) => {
-    const ISBN = "0385472579";
-    const size = "S.jpg";
+    const ISBN = "0806541229";
+    const size = "M.jpg";
     try {
         const response = await axios.get(`https://covers.openlibrary.org/b/isbn/${ISBN}-${size}`, { responseType: 'arraybuffer' });
         const base64Image = Buffer.from(response.data, 'binary').toString('base64');
