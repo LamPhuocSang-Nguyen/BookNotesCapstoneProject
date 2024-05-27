@@ -12,7 +12,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static('public'));
 
 app.get("/", async (req, res) => {
-    const ISBN = "0806541229";
+    const ISBN = "0385472579";
     const size = "M.jpg";
     try {
         const response = await axios.get(`https://covers.openlibrary.org/b/isbn/${ISBN}-${size}`, { responseType: 'arraybuffer' });

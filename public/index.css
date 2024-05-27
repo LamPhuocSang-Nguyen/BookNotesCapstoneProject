@@ -1,0 +1,39 @@
+html
+{
+    font-size: 17px;
+    height: 100%;
+    font-family: georgia, serif;
+    font-size: 16x;
+    line-height: 30px;
+}
+
+body
+{
+    margin: 0;
+    height: 100%;
+}
+
+main
+{
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+}
+
+h1, h2
+{
+    font-family: 'Valkyrie', sans-serif;
+    font-weight: 700;
+    font-style: normal;
+}
+
+.content-container
+{
+    display: flex;
+    flex-direction: column;
+    max-width: 57rem;
+    min-height: 100%;
+}

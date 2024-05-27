@@ -8,4 +8,4 @@
 nodemon index.js
 
 # Entity tables database
-![Reference image](public/Screenshort/EntityTable.PNG)
+![Reference image](public/screenshort/EntityTable.PNG)
