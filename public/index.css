@@ -1,7 +1,6 @@
 html
 {
     font-size: 17px;
-    height: 100%;
     font-family: georgia, serif;
     font-size: 16x;
     line-height: 30px;
@@ -18,12 +17,11 @@ main
     display: flex;
     align-items: flex-start;
     justify-content: center;
-    height: 100%;
     padding: 0;
     margin: 0;
 }
 
-h1, h2
+.myname
 {
     font-family: 'Valkyrie', sans-serif;
     font-weight: 700;
@@ -36,4 +34,60 @@ h1, h2
     flex-direction: column;
     max-width: 57rem;
     min-height: 100%;
+}
+
+.navbar
+{
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+    margin-bottom: 1rem;
+    border-bottom: 2px solid #DFDFDF;
+}
+.nav-button
+{
+    max-width: 13rem;
+}
+
+.nav-button:hover
+{ 
+    transform: scale(1.04);
+}
+.log-entry-container
+{
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
+    gap: 1rem;
+}
+
+.entry
+{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    min-height: 100%;
+    gap: 1rem;
+    padding-top: 2rem;
+}
+
+.update-review
+{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+.text-area
+{
+    width: 100%;
+}
+
+.btn
+{
+    min-width: 7rem;
+    padding: 0.5rem;
+    margin-top: 1rem;
 }

@@ -2,8 +2,8 @@
 
 <div class="content-container">
     <div>
-        <h1>LAM PHUOC SANG</h1>
-        <h2>BOOKS I'VE READ</h2>
+        <h1 class="myname">LAM PHUOC SANG</h1>
+        <h2 class="myname">BOOKS I'VE READ</h2>
         <p class="header-text">
             Tiny summary but <strong>detailed notes for each.</strong> 
             Use the ISBN number to find it from your 
@@ -12,16 +12,56 @@
         </p>
         <p>Sorted with <strong>my top recommendations up top. Sort by title, newest, or best.</strong></p>
         <p>And <strong>please read this FAQ page about these notes</strong>, if you have any questions. You can also email me.</p>
-        <hr>
     </div>
 
-    
+    <div class="navbar">
+        <div>
+            <a href="/new-entry"><img src="assets/images/button1.png" class="nav-button" alt="button new entry"></a>
+        </div>
+        <div>
+            <a href=""><img src="assets/images/button2.png" class="nav-button" alt="button about"></a>
+        </div>
+    </div>
 
+    <% if(locals.listBooks != undefined) { %>
+        <div class="log-entry-container">
+            <% for(let i = 0; i < listBooks.length; i++) { %>
+                <div class="entry">
+                    <div class="colum1">
+                        <img src="<%= listBooks[i].base64image %>" alt="img">
+                        <p>Date: <%= listBooks[i].date_read.toLocaleDateString('en-GB', {timeZone: 'UTC'}); %></p>
 
+                        <form action="" method="GET">
+                            <input type="hidden" name="id" value="<%=listBooks[i].id %>">
+                            <button class="btn" type="submit">View Notes</button>
+                        </form>
 
-<!--<img src="<%= data %>" alt=""> -->
-
-
+                        <form action="" method="POST">
+                            <input type="hidden" name="id" value="<%=listBooks[i].id %>">
+                            <button class="btn" type="submit">Delete Book</button>
+                        </form>
+                    </div>
+                    <div class="colum2">
+                        <h2><%=listBooks[i].title %> - by <%= listBooks[i].author %></h2>
+                        <small>ISBN: <%= listBooks[i].isbn %><br>
+                               Author: <%= listBooks[i].author %><br>
+                               HoW STRONGLY I RECOMMEND IT: <%= listBooks[i].rating %>/5 <br>
+                        </small>
+                        <h4><Strong>Description</Strong></h4>
+                        <p><%= listBooks[i].description %></p>
+                        <h4><strong>My review</strong></h4>
+                        <form class="update-review" method="POST">
+                            <input type="hidden" name="id" value="<%=listBooks[i].id%>">
+                            <textarea class="text-area" name="review" id="<%=listBooks[i].id %>" rows="7" cols="50"> <%=listBooks[i].review %> </textarea>
+                            <button class="btn" for="<%=listBooks[i].id %>"type="submit">Update Review</button>
+                        </form>
+                    </div>
+                </div>
+            <% } %>
+        </div>
+    <%} else{ %>
+        <p>don't have any books avaluable</p>
+        <% } %>
 
 
 <%- include("partials/footer.ejs") %>
