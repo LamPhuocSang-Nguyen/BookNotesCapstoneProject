@@ -31,12 +31,12 @@
                         <img src="<%= listBooks[i].base64image %>" alt="img">
                         <p>Date: <%= listBooks[i].date_read.toLocaleDateString('en-GB', {timeZone: 'UTC'}); %></p>
 
-                        <form action="" method="GET">
+                        <form action="/notes/view/<%= listBooks[i].id %>" method="GET">
                             <input type="hidden" name="id" value="<%=listBooks[i].id %>">
                             <button class="btn" type="submit">View Notes</button>
                         </form>
 
-                        <form action="" method="POST">
+                        <form action="/book/delete" method="POST">
                             <input type="hidden" name="id" value="<%=listBooks[i].id %>">
                             <button class="btn" type="submit">Delete Book</button>
                         </form>
@@ -50,7 +50,7 @@
                         <h4><Strong>Description</Strong></h4>
                         <p><%= listBooks[i].description %></p>
                         <h4><strong>My review</strong></h4>
-                        <form class="update-review" method="POST">
+                        <form class="update-review" action="/review/update" method="POST">
                             <input type="hidden" name="id" value="<%=listBooks[i].id%>">
                             <textarea class="text-area" name="review" id="<%=listBooks[i].id %>" rows="7" cols="50"> <%=listBooks[i].review %> </textarea>
                             <button class="btn" for="<%=listBooks[i].id %>"type="submit">Update Review</button>

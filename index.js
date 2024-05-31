@@ -92,7 +92,68 @@ app.post("/addbook", async (req, res) =>{
     }
 });
 
- 
+//update a new review
+app.post("/review/update", async (req, res) => {
+    const id = parseInt(req.body.id);
+    const newReview = req.body.review;
+
+    try
+    {
+        const result = await db.query("UPDATE books SET review = $1 WHERE id = $2", [newReview, id]);
+        if(result.rowCount > 0)
+        {
+            console.log("update is successfully");
+        }
+        else
+        {
+            console.log("Fail");
+        }
+        res.redirect("/");
+        console.log(req.body);
+    }catch(err){
+        console.log(err);
+    }
+}) 
+
+//view list of my notes
+app.get("/notes/view/:bookId", async (req, res) => {
+    const book_id = parseInt(req.params.bookId);
+    let data = [];
+    try
+    {
+        const result = await db.query("SELECT books.id, title, author, base64image, date_read, note FROM books LEFT JOIN notes ON books.id = notes.book_id WHERE books.id = $1", [book_id]);
+        result.rows.forEach((object) => {
+            data.push(object);
+        });
+        res.render("note.ejs", {data: data});
+    }catch(err){
+        console.log(err);
+    }
+});
+
+//adding a new note
+app.post("/notes/add", async (req, res) => {
+    const note = req.body.note;
+    const bookid = req.body.id;
+
+    try
+    {
+        const result = await db.query("INSERT INTO notes(note, book_id) VALUES($1,$2)", [note, bookid]);
+        if(result.rowCount > 0)
+        {
+            console.log("Adding note is successfully");
+        }
+        else
+        {
+            console.log("Fail");
+        }
+        res.redirect(`/notes/view/${bookid}`);//res.redirect reloads the page by hitting the GET route /notes/view/:bookId
+    }catch(err){
+        console.log(err);
+    }
+});
+
+
 app.listen(port, ()=> {
     console.log(`server is running on port ${port}`);
 });

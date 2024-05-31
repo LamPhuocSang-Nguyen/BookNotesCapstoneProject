@@ -10,7 +10,7 @@ nodemon index.js
 # Entity tables database
 ![Reference image](public/screenshort/EntityTable.PNG)
 
-# APT Interaction
+# API Interaction
 * When submitting a new book entry, cover images are fetched from the [Open Library Covers API](https://openlibrary.org/dev/docs/api/covers) using Axios. A `getBase64Image` function fetches the image and save them to DBMS.
 
 # Access the website in your browser

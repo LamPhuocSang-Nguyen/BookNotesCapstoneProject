@@ -1,0 +1,31 @@
+<%- include('partials/header.ejs') %>
+
+
+<div class="content-container">
+    <div class="log-entry-container">
+        <h2><%=locals.data[0].title%></h2>
+        <small><%=locals.data[0].author%></small>
+        <div class="entry">
+            <div class="colum1">
+                <img src="<%= locals.data[0].base64image %>" alt="img">
+                <h2>Date:<%=locals.data[0].date_read.toLocaleDateString('en-GB', {timeZone: 'UTC'});%></h2>
+            </div>
+
+            <div class="colum2">
+                <form class="addnote" action="/notes/add" method="POST">
+                    <input type="hidden" name="id" value="<%=locals.data[0].id%>">
+                    <textarea class="addNoteCls" name="note" id="<%=locals.data[0].id%>"></textarea>
+                    <button class="btn" type="submit">Add Note</button>
+                </form>
+
+                <% locals.data.forEach(element => { %>
+                    <div class="note">
+                        <p><%= element.note%></p>
+                        <img class="imageNote" src="/assets/images/pen-to-square-solid.svg" alt="">
+                        <img class="imageNote" src="/assets/images/trash-solid.svg" alt="">
+                    </div>
+                <%});%>
+            </div>
+        </div>    
+    </div>
+<%- include('partials/footer.ejs') %>

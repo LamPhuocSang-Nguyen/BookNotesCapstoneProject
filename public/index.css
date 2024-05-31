@@ -73,7 +73,7 @@ main
     padding-top: 2rem;
 }
 
-.update-review
+.update-review, .addnote
 {
     display: flex;
     flex-direction: column;
@@ -90,4 +90,21 @@ main
     min-width: 7rem;
     padding: 0.5rem;
     margin-top: 1rem;
+}
+
+.addNoteCls
+{
+    height: 100px;
+    width: 38rem;
+}
+
+.note
+{
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+}
+.imageNote:hover
+{
+    transform: scale(1.04);
 }
