@@ -104,7 +104,13 @@ main
     flex-direction: row;
     gap: 1rem;
 }
-.imageNote:hover
+.btnNote:hover
 {
     transform: scale(1.04);
+}
+
+.btnNote
+{
+    margin-top: 2rem;
+    height: 3rem;
 }

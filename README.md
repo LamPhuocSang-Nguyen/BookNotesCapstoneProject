@@ -18,9 +18,10 @@ nodemon index.js
 
 # Some pictures from my page 
 1. Header of the page
-![Reference image](public/screenshort/home.PNG)
+![Reference image](public/screenshort/homeBooks.PNG)
 2. Book entries with `View Notes`, `Delete Book`, `Update Review` features
 ![Reference image](public/screenshort/content.PNG)
 3. Adding a new book with the information of the book
 ![Reference image](public/screenshort/newbook.PNG)
-
+4. Notes listing including `Add Note`, `Update Note`, `Delete Note` features
+ ![Reference image](public/screenshort/viewnote.PNG)

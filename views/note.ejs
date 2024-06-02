@@ -9,6 +9,7 @@
             <div class="colum1">
                 <img src="<%= locals.data[0].base64image %>" alt="img">
                 <h2>Date:<%=locals.data[0].date_read.toLocaleDateString('en-GB', {timeZone: 'UTC'});%></h2>
+                <a href="/">Return your home</a>
             </div>
 
             <div class="colum2">
@@ -18,13 +19,27 @@
                     <button class="btn" type="submit">Add Note</button>
                 </form>
 
-                <% locals.data.forEach(element => { %>
+                <% for(let i = 0; i < locals.data.length; i++) { %>
                     <div class="note">
-                        <p><%= element.note%></p>
-                        <img class="imageNote" src="/assets/images/pen-to-square-solid.svg" alt="">
-                        <img class="imageNote" src="/assets/images/trash-solid.svg" alt="">
+                        <p id="notelement<%=i%>"><%= locals.data[i].note%></p>
+                        <div class="deletenoteform">
+                            <form action="/notes/delete" method="POST">
+                                <input type="hidden" name="book_id" value="<%=locals.data[i].id%>">
+                                <input type="hidden" name="note_id" value="<%=locals.data[i].note_id%>">
+                                <button type="submit" class="btnNote" id="btnNoteTrash<%=i%>"><img src="/assets/images/trash-solid.svg" alt=""></button>
+                            </form>
+                        </div>
+                        <div class="updatenoteForm">
+                            <form action="/notes/update" method="POST">
+                                <input type="hidden" name="book_id" value="<%=locals.data[i].id%>">
+                                <input type="hidden" name="note_id" value="<%=locals.data[i].note_id%>">
+                                <textarea class="addNoteCls" name="updatenote" id="text<%=i%>" hidden><%= locals.data[i].note%></textarea>
+                                <button type="submit" class="btn" id="btnsubmit<%=i%>" hidden>Update Note</button>
+                            </form>
+                            <button class="btnNote" id="btnNotePen<%=i%>"><img onclick="updateNoteFn('<%=i%>')" src="/assets/images/pen-to-square-solid.svg" alt=""></button>
+                        </div>
                     </div>
-                <%});%>
+                <% } %>
             </div>
         </div>    
     </div>

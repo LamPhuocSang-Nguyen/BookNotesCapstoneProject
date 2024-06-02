@@ -23,14 +23,14 @@ app.use(express.static('public'));
 
 let books = [];
 
-async function getAllBooks()
+/*async function getAllBooks()
 {
     books = [];
     const result = await db.query("SELECT * FROM books");
     result.rows.forEach((book) => {
         books.push(book);
     });
-}
+}*/
 
 async function getBase64Image(ISBN)
 {
@@ -42,8 +42,41 @@ async function getBase64Image(ISBN)
 
 //get root
 app.get("/", async (req, res) => {
+    const sort = req.query.sort;
     try {
-        await getAllBooks();
+        if(sort === undefined)
+        {
+            books = [];
+            const result = await db.query("SELECT * FROM books");
+            result.rows.forEach((book) => {
+                books.push(book);
+            });
+        }
+        else if(sort === "title")
+        {
+            books = [];
+            const result = await db.query("SELECT * FROM books ORDER BY title ASC");
+            result.rows.forEach((book) => {
+                books.push(book);
+            });
+
+        }
+        else if(sort === "date")
+        {
+            books = [];
+            const result = await db.query("SELECT * FROM books ORDER BY date_read DESC");
+            result.rows.forEach((book) => {
+                books.push(book);
+            });
+        }
+        else
+        {
+            books = [];
+            const result = await db.query("SELECT * FROM books ORDER BY rating DESC");
+            result.rows.forEach((book) => {
+                books.push(book);
+            });
+        }
         res.render("index.ejs", { listBooks: books });
     } catch (err) {
         console.log(err);
@@ -92,6 +125,22 @@ app.post("/addbook", async (req, res) =>{
     }
 });
 
+//delete a book
+app.post("/book/delete", async(req, res) =>{
+    const bookid = parseInt(req.body.id);
+
+    try
+    {
+        await db.query("DELETE FROM notes WHERE book_id = $1", [bookid]);
+        await db.query("DELETE FROM books WHERE id = $1",[bookid]);
+        res.redirect("/");
+    }catch(err)
+    {
+        console.log(err);
+    }
+});
+
+
 //update a new review
 app.post("/review/update", async (req, res) => {
     const id = parseInt(req.body.id);
@@ -121,7 +170,7 @@ app.get("/notes/view/:bookId", async (req, res) => {
     let data = [];
     try
     {
-        const result = await db.query("SELECT books.id, title, author, base64image, date_read, note FROM books LEFT JOIN notes ON books.id = notes.book_id WHERE books.id = $1", [book_id]);
+        const result = await db.query("SELECT notes.id as note_id, books.id, title, author, base64image, date_read, note FROM books LEFT JOIN notes ON books.id = notes.book_id WHERE books.id = $1", [book_id]);
         result.rows.forEach((object) => {
             data.push(object);
         });
@@ -149,6 +198,46 @@ app.post("/notes/add", async (req, res) => {
         }
         res.redirect(`/notes/view/${bookid}`);//res.redirect reloads the page by hitting the GET route /notes/view/:bookId
     }catch(err){
+        console.log(err);
+    }
+});
+
+//updating a note
+app.post("/notes/update", async (req, res) =>{
+    const book_id = parseInt(req.body.book_id);
+    const note_id = parseInt(req.body.note_id);
+    const updateNote = req.body.updatenote;
+
+    try
+    {
+        const result = await db.query("UPDATE notes SET note = $1 WHERE id = $2", [updateNote, note_id]);
+        if(result.rowCount > 0)
+        {
+            console.log("update is successfully");
+        }
+        else
+        {
+            console.log("Fail");
+        }
+        res.redirect(`/notes/view/${book_id}`);//res.redirect reloads the page by hitting the GET route /notes/view/:bookId
+    }catch(err)
+    {
+        console.log(err);
+    }
+});
+
+//delete a note
+app.post("/notes/delete", async(req, res) =>{
+    const book_id = parseInt(req.body.book_id);
+    const note_id = parseInt(req.body.note_id);
+
+    try
+    {
+        await db.query("DELETE FROM notes WHERE id = $1", [note_id]);
+
+        res.redirect(`/notes/view/${book_id}`);//res.redirect reloads the page by hitting the GET route /notes/view/:bookId
+    }catch(err)
+    {
         console.log(err);
     }
 });
